@@ -14,7 +14,7 @@ while true; do
 
   # Test 1: List all clients
   printf "👥 Clients...\n"
-  HTTP_CODE=$(curl -s -k -o /dev/null -w "%{http_code}" --resolve "fineract.dynabank.com:443:$GATEWAY" -u mifos:password -H "Fineract-Platform-TenantId: default" -H "Host: fineract.dynabank.com" "https://fineract.dynabank.com/fineract-provider/api/v1/clients" 2>&1)
+  HTTP_CODE=$(curl -s -k -o /dev/null -w "%{http_code}" --resolve "fineract.dynabank.com:443:$GATEWAY" -H "x-b3-sampled: 1" -u mifos:password -H "Fineract-Platform-TenantId: default" -H "Host: fineract.dynabank.com" "https://fineract.dynabank.com/fineract-provider/api/v1/clients" 2>&1)
   if [ "$HTTP_CODE" = "200" ]; then
     printf "   ✅ %s\n" "$HTTP_CODE"
     SUCCESS_COUNT=$((SUCCESS_COUNT + 1))
@@ -25,7 +25,7 @@ while true; do
 
   # Test 2: List all loans
   printf "💰 Loans...\n"
-  HTTP_CODE=$(curl -s -k -o /dev/null -w "%{http_code}" --resolve "fineract.dynabank.com:443:$GATEWAY" -u mifos:password -H "Fineract-Platform-TenantId: default" -H "Host: fineract.dynabank.com" "https://fineract.dynabank.com/fineract-provider/api/v1/loans" 2>&1)
+  HTTP_CODE=$(curl -s -k -o /dev/null -w "%{http_code}" --resolve "fineract.dynabank.com:443:$GATEWAY" -H "x-b3-sampled: 1" -u mifos:password -H "Fineract-Platform-TenantId: default" -H "Host: fineract.dynabank.com" "https://fineract.dynabank.com/fineract-provider/api/v1/loans" 2>&1)
   if [ "$HTTP_CODE" = "200" ]; then
     printf "   ✅ %s\n" "$HTTP_CODE"
     SUCCESS_COUNT=$((SUCCESS_COUNT + 1))
@@ -36,7 +36,7 @@ while true; do
 
   # Test 3: List all savings accounts
   printf "💵 Savings...\n"
-  HTTP_CODE=$(curl -s -k -o /dev/null -w "%{http_code}" --resolve "fineract.dynabank.com:443:$GATEWAY" -u mifos:password -H "Fineract-Platform-TenantId: default" -H "Host: fineract.dynabank.com" "https://fineract.dynabank.com/fineract-provider/api/v1/savingsaccounts" 2>&1)
+  HTTP_CODE=$(curl -s -k -o /dev/null -w "%{http_code}" --resolve "fineract.dynabank.com:443:$GATEWAY" -H "x-b3-sampled: 1" -u mifos:password -H "Fineract-Platform-TenantId: default" -H "Host: fineract.dynabank.com" "https://fineract.dynabank.com/fineract-provider/api/v1/savingsaccounts" 2>&1)
   if [ "$HTTP_CODE" = "200" ]; then
     printf "   ✅ %s\n" "$HTTP_CODE"
     SUCCESS_COUNT=$((SUCCESS_COUNT + 1))
@@ -47,7 +47,7 @@ while true; do
 
   # Test 4: List all offices
   printf "🏢 Offices...\n"
-  HTTP_CODE=$(curl -s -k -o /dev/null -w "%{http_code}" --resolve "fineract.dynabank.com:443:$GATEWAY" -u mifos:password -H "Fineract-Platform-TenantId: default" -H "Host: fineract.dynabank.com" "https://fineract.dynabank.com/fineract-provider/api/v1/offices" 2>&1)
+  HTTP_CODE=$(curl -s -k -o /dev/null -w "%{http_code}" --resolve "fineract.dynabank.com:443:$GATEWAY" -H "x-b3-sampled: 1" -u mifos:password -H "Fineract-Platform-TenantId: default" -H "Host: fineract.dynabank.com" "https://fineract.dynabank.com/fineract-provider/api/v1/offices" 2>&1)
   if [ "$HTTP_CODE" = "200" ]; then
     printf "   ✅ %s\n" "$HTTP_CODE"
     SUCCESS_COUNT=$((SUCCESS_COUNT + 1))
