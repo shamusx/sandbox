@@ -1,0 +1,17 @@
+---
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+  name: httpbin-bypass-jwt-req
+  namespace: httpbin
+spec:
+  selector:
+    matchLabels:
+      app: httpbin
+  rules:
+  - from:
+    - source:
+        requestPrincipals: ["sleep/*"]
+  - to:
+    - operation:
+        paths: ["/"]

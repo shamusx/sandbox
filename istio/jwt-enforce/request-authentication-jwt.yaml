@@ -1,0 +1,22 @@
+apiVersion: security.istio.io/v1
+kind: RequestAuthentication
+metadata:
+  name: eshop-requestauth
+  namespace: eshop
+spec:
+  selector: {}
+  jwtRules:
+  - issuer: "https://accounts.google.com"
+    jwksUri: https://www.googleapis.com/oauth2/v3/certs
+---
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+  name: eshop-authz
+  namespace: eshop
+spec:
+  selector: {}
+  rules:
+  - from:
+    - source:
+        requestPrincipals: ["*"]

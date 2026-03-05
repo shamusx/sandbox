@@ -1,0 +1,19 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: EnvoyFilter
+metadata:
+  name: modify-connect-timeout
+  namespace: bookinfo
+spec:
+  workloadSelector:
+    labels:
+      app: bookinfo-gw
+  configPatches:
+    - applyTo: CLUSTER
+      match:
+        context: GATEWAY
+        cluster:
+          name: "outbound|80|bookinfo-gw-productpage-external-port-80|internal-bookinfo.tetrate.io"
+      patch:
+        operation: MERGE
+        value:
+          connect_timeout: "0.5s"

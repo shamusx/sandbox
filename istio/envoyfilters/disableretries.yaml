@@ -1,0 +1,43 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: EnvoyFilter
+metadata:
+  name: disable-retries-for-post
+spec:
+  workloadSelector:
+    labels:
+      app: edge-gateway
+  priority: 10000
+  configPatches:
+  - applyTo: HTTP_ROUTE
+    match:
+      context: GATEWAY
+      routeConfiguration:
+        vhost:
+          route:
+            action: ROUTE
+    patch:
+      operation: MERGE
+      value:
+        '@type': type.googleapis.com/envoy.config.route.v3.Route
+        route:
+          retry_policy:
+            host_selection_retry_max_attempts: '3'
+            num_retries: 0
+            retriable_request_headers:
+            - name: ':method'
+              string_match:
+                exact: GET
+            - name: ':method'
+              string_match:
+                exact: HEAD
+            - name: ':method'
+              string_match:
+                exact: DELETE
+            - name: ':method'
+              string_match:
+                exact: PUT
+            retry_host_predicate:
+            - name: envoy.retry_host_predicates.previous_hosts
+              typed_config:
+                "@type": type.googleapis.com/envoy.extensions.retry.host.previous_hosts.v3.PreviousHostsPredicate
+            retry_on: 5xx,connect-failure,reset,gateway-error
